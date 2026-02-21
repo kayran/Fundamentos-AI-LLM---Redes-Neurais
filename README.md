@@ -1,40 +1,32 @@
-# Neural Network Study: Categorization with TensorFlow.js
+# Summary
+This project is a practical study module for Neural Networks developed with **TensorFlow.js** and **Node.js**. It implements a classification model designed to categorize individuals into three distinct levels—**Premium**, **Medium**, and **Basic**—based on input features such as age, preferred color, and location. The core objective is to demonstrate how a neural network can effectively learn complex patterns from small datasets using techniques like one-hot encoding and data normalization.
 
-This project is a practical study module for Neural Networks using **TensorFlow.js** and **Node.js**. It implements a classification model to categorize individuals into three levels: **Premium**, **Medium**, and **Basic**, based on their age, preferred color, and location.
+# Structure
+- `.agent/`: Contains internal configuration, logic, and prompt templates used by the AI to maintain documentation consistency.
+- `README.md`: The primary documentation file providing the project overview, architecture details, and setup instructions.
+- `package.json`: Defines the project dependencies and the execution scripts for the Node.js environment.
+- **Source Code**: Includes the implementation of the sequential model, data preprocessing logic, and the training loop.
 
-## Core Purpose
+# Technologies
+- **TensorFlow.js**: Core library for building and training the machine learning model.
+- **Node.js**: The runtime environment (utilizing ES modules).
+- **Adam Optimizer**: Used for adaptive weight adjustment during the training process.
+- **Activation Functions**: Employs **ReLU** for the hidden layer and **Softmax** for the output layer.
+- **Categorical Crossentropy**: The loss function utilized for multi-class classification.
+- **Gemini AI**: Integration used for the experimental automated documentation helper.
 
-The primary objective is to demonstrate how a simple neural network can learn complex patterns from a small dataset using one-hot encoding for categorical variables and normalization for numerical data.
+# Extra Details
+### Recent Updates
+The internal AI prompt logic has been updated to strictly maintain the project's purpose. This ensures that automated documentation updates remain consistent and do not alter the high-level project narrative, even when commit diffs suggest significant changes to underlying scripts.
 
-## Network Architecture
+### Network Architecture
+- **Input Layer**: 7 dimensions (normalized age, one-hot encoded colors, and locations).
+- **Hidden Layer**: 200 neurons with ReLU activation.
+- **Output Layer**: 3 neurons with Softmax activation for probability distribution.
+- **Training**: Configured for 1000 epochs to ensure convergence on the provided dataset.
 
-The model is built using a sequential approach with the following structure:
-
-- **Input Layer**: 7 dimensions (1 for normalized age + 3 for colors + 3 for locations).
-- **Hidden Layer**: 200 neurons with **ReLU** activation. This layer acts as a filter, passing forward relevant features.
-- **Output Layer**: 3 neurons with **Softmax** activation, providing a probability distribution across the three categories.
-
-## Training Parameters
-
-- **Optimizer**: `Adam` (Adaptive Moment Estimation) for efficient weight adjustment.
-- **Loss Function**: `Categorical Crossentropy`, ideal for multi-class classification where only one category is correct.
-- **Epochs**: 1000 iterations over the training set to ensure convergence.
-- **Dataset**: A sample of labeled individuals with normalized age ranges (25-40).
-
-## How to Run
-
-1.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-2.  **Execute the script**:
-    ```bash
-    npm start
-    ```
-    *Note: The project uses ES modules (`"type": "module"`) and handles data exclusively in-memory for study purposes.*
-
-## Automated Documentation Helper
-
-This project includes an experimental Git hook that uses AI to help maintain documentation.
-- **Mechanism**: A `post-commit` hook triggers a script that analyzes commit diffs via Gemini AI.
-- **Purpose**: It suggests minor updates to the `README.md` to keep the high-level summary in sync with logic changes, although this main README content is manually curated for educational depth.
+### Execution
+To run the study module:
+1.  **Install dependencies**: `npm install`
+2.  **Run the model**: `npm start`
+*The system handles data in-memory and includes a Git hook mechanism that suggests README updates based on commit history.*
