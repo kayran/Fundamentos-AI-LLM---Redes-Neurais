@@ -1,17 +1,16 @@
-# Project Documentation Assistant
+# Summary
+This project is an automated documentation maintenance system designed to keep project information synchronized with the codebase. By leveraging AI and analyzing commit history, it ensures that the `README.md` file accurately reflects the current state of the project without manual intervention for every change.
 
-## Summary
-This project is an automated documentation tool designed to keep `README.md` files synchronized with the latest codebase changes. By analyzing git commit messages and diffs, it ensures that project documentation remains accurate and up-to-date with minimal manual intervention.
+# Structure
+The project follows a streamlined directory layout focused on documentation and AI configuration:
+- `.agent/`: Contains internal logic, instructions, and prompt templates used by the AI to process updates.
+- `README.md`: The primary documentation file for the project.
 
-## Structure
-- **.agent/**: Contains the internal configuration, logic, and prompt templates used by the AI assistant (restricted access).
-- **README.md**: The primary documentation file that provides a high-level overview and technical details of the project.
+# Technologies
+- **Markdown**: For structured documentation.
+- **Git**: For version control and change tracking.
+- **AI Prompt Engineering**: Specialized prompts designed to guide LLMs in documentation tasks.
+- **LLM Integration**: Powering the automated updates based on commit diffs.
 
-## Technologies
-- **Markdown**: For structured and readable documentation.
-- **Git**: For version control and tracking changes via commits and diffs.
-- **AI Prompt Engineering**: Specialized instruction sets to govern how documentation is generated and updated.
-
-## Extra Details
-- **Recent Update**: The AI prompt logic has been refined to ensure that documentation updates are incremental and consistent. The system now prioritizes maintaining the existing structure and only applying changes directly related to the provided commit information, avoiding unnecessary full rewrites.
-- **Update Focus**: Current improvements focus on the precision of the documentation agent's responses and its adherence to specific formatting rules.
+# Extra Details
+In the latest update, the internal AI prompt logic was refined to improve context awareness. The system now prioritizes reading the overall project context alongside commit messages and diffs. This improvement ensures that documentation updates are more consistent and meaningful, avoiding superficial changes while maintaining the broader project narrative.
