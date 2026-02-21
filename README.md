@@ -1,20 +1,25 @@
-# Fundamentos AI, LLM & Neural Networks
+# Modulo 2 - Redes Neurais
 
 ## Summary
-This project focuses on the core principles of Artificial Intelligence, Large Language Models (LLMs), and Neural Networks. It serves as a foundational repository for exploring AI architectures and testing automated documentation workflows, ensuring that project information remains current and synchronized with the latest developments.
+This project is a practical exploration of Artificial Intelligence and Neural Networks using TensorFlow.js within a Node.js environment. Its primary purpose is to demonstrate the implementation of a classification model that categorizes users into specific service tiers (Premium, Medium, or Basic) based on input features such as age, color preferences, and geographic location.
 
 ## Structure
-The repository is organized to cover fundamental AI concepts and automation testing:
-- **Root Directory**: Contains essential project configuration and documentation files.
-- **Documentation**: Includes the `README.md` and other guides detailing project objectives and automation processes.
-- **Core Modules**: (Conceptual) Implementation of neural network fundamentals and LLM-related scripts.
+The project follows a minimalist structure focused on clarity and ease of execution:
+- `index.js`: The core script of the application. It handles data preprocessing (normalization and one-hot encoding), neural network architecture definition, model training, and prediction logic.
+- `package.json`: Contains project metadata, execution scripts, and identifies `@tensorflow/tfjs-node` as the primary dependency.
+- `scripts/`: Directory for utility scripts, including `update_readme_ai.sh` which automates documentation updates.
 
 ## Technologies
-- **Artificial Intelligence (AI)**: Concepts and implementation strategies.
-- **Large Language Models (LLM)**: Exploration of model logic and integration.
-- **Neural Networks**: Deep learning fundamentals and architectural structures.
-- **Automation Tools**: Scripts and workflows for automated documentation updates.
-- **Markdown**: For structured and readable documentation.
+- **Runtime**: Node.js (v18+)
+- **Machine Learning Library**: TensorFlow.js for Node.js (`@tensorflow/tfjs-node`)
+- **Neural Network Architecture**: Sequential Model
+- **Optimizers**: Adam (Adaptive Moment Estimation)
+- **Loss Functions**: Categorical Crossentropy (for multi-class classification)
+- **Activation Functions**: ReLU (Hidden Layer) and Softmax (Output Layer)
 
 ## Extra Details
-Recent updates to the project include the initialization of the README file specifically for automation testing purposes. This update serves as a final verification step for the AI README automation pipeline, ensuring that the system can correctly parse commit messages and diffs to generate comprehensive documentation updates.
+The latest update introduces a fully functional classification neural network. Key features of the implementation include:
+- **Data Preprocessing**: Manual normalization of age values and one-hot encoding for categorical data (Colors and Locations) to ensure the neural network can process the information effectively.
+- **Model Design**: A dense neural network with a hidden layer of 200 units to capture complex patterns within a small dataset.
+- **Training Process**: Configured for 1000 epochs with data shuffling enabled to prevent bias, providing real-time accuracy and loss feedback during the process.
+- **Automated Documentation**: Integration of a Shell/Python-based automation script that uses AI to maintain the project's documentation based on git history.
