@@ -1,16 +1,40 @@
-# Summary
-This project is an automated documentation maintenance system designed to keep project information synchronized with the codebase. By leveraging AI and analyzing commit history, it ensures that the `README.md` file accurately reflects the current state of the project without manual intervention for every change.
+# Neural Network Study: Categorization with TensorFlow.js
 
-# Structure
-The project follows a streamlined directory layout focused on documentation and AI configuration:
-- `.agent/`: Contains internal logic, instructions, and prompt templates used by the AI to process updates.
-- `README.md`: The primary documentation file for the project.
+This project is a practical study module for Neural Networks using **TensorFlow.js** and **Node.js**. It implements a classification model to categorize individuals into three levels: **Premium**, **Medium**, and **Basic**, based on their age, preferred color, and location.
 
-# Technologies
-- **Markdown**: For structured documentation.
-- **Git**: For version control and change tracking.
-- **AI Prompt Engineering**: Specialized prompts designed to guide LLMs in documentation tasks.
-- **LLM Integration**: Powering the automated updates based on commit diffs.
+## Core Purpose
 
-# Extra Details
-In the latest update, the internal AI prompt logic was refined to improve context awareness. The system now prioritizes reading the overall project context alongside commit messages and diffs. This improvement ensures that documentation updates are more consistent and meaningful, avoiding superficial changes while maintaining the broader project narrative.
+The primary objective is to demonstrate how a simple neural network can learn complex patterns from a small dataset using one-hot encoding for categorical variables and normalization for numerical data.
+
+## Network Architecture
+
+The model is built using a sequential approach with the following structure:
+
+- **Input Layer**: 7 dimensions (1 for normalized age + 3 for colors + 3 for locations).
+- **Hidden Layer**: 200 neurons with **ReLU** activation. This layer acts as a filter, passing forward relevant features.
+- **Output Layer**: 3 neurons with **Softmax** activation, providing a probability distribution across the three categories.
+
+## Training Parameters
+
+- **Optimizer**: `Adam` (Adaptive Moment Estimation) for efficient weight adjustment.
+- **Loss Function**: `Categorical Crossentropy`, ideal for multi-class classification where only one category is correct.
+- **Epochs**: 1000 iterations over the training set to ensure convergence.
+- **Dataset**: A sample of labeled individuals with normalized age ranges (25-40).
+
+## How to Run
+
+1.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+2.  **Execute the script**:
+    ```bash
+    npm start
+    ```
+    *Note: The project uses ES modules (`"type": "module"`) and handles data exclusively in-memory for study purposes.*
+
+## Automated Documentation Helper
+
+This project includes an experimental Git hook that uses AI to help maintain documentation.
+- **Mechanism**: A `post-commit` hook triggers a script that analyzes commit diffs via Gemini AI.
+- **Purpose**: It suggests minor updates to the `README.md` to keep the high-level summary in sync with logic changes, although this main README content is manually curated for educational depth.
