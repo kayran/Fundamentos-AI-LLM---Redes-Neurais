@@ -4,41 +4,40 @@ import tf from '@tensorflow/tfjs-node';
 async function trainModel(inputXs, outputYs) {
     const model = tf.sequential()
 
-    // Primeira camada da rede:
-    // entrada de 7 posições (idade normalizada + 3 cores + 3 localizacoes)
+    // First layer of the network:
+    // 7-position input (normalized age + 3 colors + 3 locations)
 
-    // 80 neuronios = aqui coloquei tudo isso, pq tem pouca base de treino
-    // quanto mais neuronios, mais complexidade a rede pode aprender
-    // e consequentemente, mais processamento ela vai usar
+    // 200 neurons = I used this many because there is a small training base
+    // the more neurons, the more complexity the network can learn
+    // and consequently, the more processing power it will use
 
-    // A ReLU age como um filtro:
-    // É como se ela deixasse somente os dados interessantes seguirem viagem na rede
-    /// Se a informação chegou nesse neuronio é positiva, passa para frente!
-    // se for zero ou negativa, pode jogar fora, nao vai servir para nada
+    // ReLU acts as a filter:
+    // It's as if it only lets interesting data continue through the network
+    /// If the information reaching this neuron is positive, pass it forward!
+    // if it's zero or negative, discard it, it won't be useful
     model.add(tf.layers.dense({ inputShape: [7], units: 200, activation: 'relu' }))
 
-    // Saída: 3 neuronios
-    // um para cada categoria (premium, medium, basic)
+    // Output: 3 neurons
+    // one for each category (premium, medium, basic)
 
-    // activation: softmax normaliza a saida em probabilidades
+    // activation: softmax normalizes the output into probabilities
     model.add(tf.layers.dense({ units: 3, activation: 'softmax' }))
 
-    // Compilando o modelo
-    // optimizer Adam ( Adaptive Moment Estimation)
-    // é um treinador pessoal moderno para redes neurais:
-    // ajusta os pesos de forma eficiente e inteligente
-    // aprender com historico de erros e acertos
+    // Compiling the model
+    // optimizer Adam (Adaptive Moment Estimation)
+    // is a modern personal trainer for neural networks:
+    // adjusts weights efficiently and intelligently
+    // learns from the history of errors and successes
 
     // loss: categoricalCrossentropy
-    // Ele compara o que o modelo "acha" (os scores de cada categoria)
-    // com a resposta certa
-    // a categoria premium será sempre [1, 0, 0]
+    // It compares what the model "thinks" (the scores for each category)
+    // with the correct answer
+    // the premium category will always be [1, 0, 0]
 
-    // quanto mais distante da previsão do modelo da resposta correta
-    // maior o erro (loss)
-    // Exemplo classico: classificação de imagens, recomendação, categorização de
-    // usuário
-    // qualquer coisa em que a resposta certa é "apenas uma entre várias possíveis"
+    // the further the model's prediction is from the correct answer
+    // greater the error (loss)
+    // Classic example: image classification, recommendation, user categorization
+    // anything where the correct answer is "just one among several possibles"
 
     model.compile({
         optimizer: 'adam',
@@ -46,10 +45,10 @@ async function trainModel(inputXs, outputYs) {
         metrics: ['accuracy']
     })
 
-    // Treinamento do modelo
-    // verbose: desabilita o log interno (e usa só callback)
-    // epochs: quantidade de veses que vai rodar no dataset
-    // shuffle: embaralha os dados, para evitar viés
+    // Model training
+    // verbose: disables internal log (and uses callback instead)
+    // epochs: number of times it will run through the dataset
+    // shuffle: shuffles the data to avoid bias
     await model.fit(
         inputXs,
         outputYs,
@@ -69,44 +68,44 @@ async function trainModel(inputXs, outputYs) {
 }
 
 async function predict(model, pessoa) {
-    // transformar o array js para o tensor (tfjs)
+    // transform the JS array into a tensor (tfjs)
     const tfInput = tf.tensor2d(pessoa)
 
-    // Faz a predição (output será um vetor de 3 probabilidades)
+    // Performs the prediction (output will be a vector of 3 probabilities)
     const pred = model.predict(tfInput)
     const predArray = await pred.array()
     return predArray[0].map((prob, index) => ({ prob, index }))
 }
-// Exemplo de pessoas para treino (cada pessoa com idade, cor e localização)
-const pessoas = [
-    { nome: "Erick", idade: 30, cor: "azul", localizacao: "São Paulo" },
-    { nome: "Ana", idade: 25, cor: "vermelho", localizacao: "Rio" },
-    { nome: "Carlos", idade: 40, cor: "verde", localizacao: "Curitiba" },
-    { nome: "Olivia", idade: 36, cor: "verde", localizacao: "Entre Rios" },
-    { nome: "Maria", idade: 26, cor: "vermelho", localizacao: "Ouro Preto" },
-];
+// Training example people (each person with age, color, and location)
+// const pessoas = [
+//     { name: "Erick", age: 30, color: "azul", location: "São Paulo" },
+//     { name: "Ana", age: 25, color: "vermelho", location: "Rio" },
+//     { name: "Carlos", age: 40, color: "verde", location: "Curitiba" },
+//     { name: "Olivia", age: 36, color: "verde", location: "Entre Rios" },
+//     { name: "Maria", age: 26, color: "vermelho", location: "Ouro Preto" },
+// ];
 
-// Vetores de entrada com valores já normalizados e one-hot encoded
-// Ordem: [idade_normalizada, azul, vermelho, verde, São Paulo, Rio, Curitiba]
+// Input vectors with values already normalized and one-hot encoded
+// Order: [normalized_age, blue, red, green, São Paulo, Rio, Curitiba]
 // const tensorPessoas = [
 //     [0.33, 1, 0, 0, 1, 0, 0], // Erick
 //     [0, 0, 1, 0, 0, 1, 0],    // Ana
 //     [1, 0, 0, 1, 0, 0, 1]     // Carlos
 // ]
 
-// Usamos apenas os dados numéricos, como a rede neural só entende números.
-// tensorPessoasNormalizado corresponde ao dataset de entrada do modelo.
+// We only use numerical data, as the neural network only understands numbers.
+// tensorPessoasNormalizado corresponds to the model's input dataset.
 const tensorPessoasNormalizado = [
     [0.33, 1, 0, 0, 1, 0, 0], // Erick
     [0, 0, 1, 0, 0, 1, 0],    // Ana
     [1, 0, 0, 1, 0, 0, 1],     // Carlos
-    [(36-25)/(40-25), 0, 0, 1, 0, 0, 1],     // Olivia
-    [(26-25)/(40-25), 0, 1, 0, 0, 1, 0]     // Maria
+    [(36 - 25) / (40 - 25), 0, 0, 1, 0, 0, 1],     // Olivia
+    [(26 - 25) / (40 - 25), 0, 1, 0, 0, 1, 0]     // Maria
 ];
 
-// Labels das categorias a serem previstas (one-hot encoded)
+// Labels of the categories to be predicted (one-hot encoded)
 // [premium, medium, basic]
-const labelsNomes = ["premium", "medium", "basic"]; // Ordem dos labels
+const labelsNomes = ["premium", "medium", "basic"]; // Order of labels
 const tensorLabels = [
     [1, 0, 0], // premium - Erick
     [0, 1, 0], // medium - Ana
@@ -115,41 +114,41 @@ const tensorLabels = [
     [0, 0, 1]  // basic - Maria
 ];
 
-// Criamos tensores de entrada (xs) e saída (ys) para treinar o modelo
+// Create input (xs) and output (ys) tensors to train the model
 const inputXs = tf.tensor2d(tensorPessoasNormalizado)
 const outputYs = tf.tensor2d(tensorLabels)
 
-// quanto mais dado melhor!
-// assim o algoritmo consegue entender melhor os padrões complexos
-// dos dados
+// the more data, the better!
+// this way the algorithm can better understand the complex patterns
+// in the data
 const model = await trainModel(inputXs, outputYs)
 
 const pessoa = { nome: 'zé', idade: 28, cor: 'verde', localizacao: "Curitiba" }
 const kayran = { nome: 'Kayran', idade: 36, cor: 'azul', localizacao: "Ouro Preto" }
-// Normalizando a idade da nova pessoa usando o mesmo padrão do treino
-// Exemplo: idade_min = 25, idade_max = 40, então (28 - 25) / (40 - 25 ) = 0.2
+// Normalizing the age of the new person using the same training pattern
+// Example: min_age = 25, max_age = 40, so (28 - 25) / (40 - 25) = 0.2
 
 const pessoaTensorNormalizado = [
     [
-        0.2, // idade normalizada
-        1,    // cor azul
-        0,    // cor vermelho
-        0,    // cor verde
-        0,    // localização São Paulo
-        1,    // localização Rio
-        0     // localização Curitiba
+        0.2, // normalized age
+        1,    // blue color
+        0,    // red color
+        0,    // green color
+        0,    // São Paulo location
+        1,    // Rio location
+        0     // Curitiba location
     ]
 ]
 
 const kayranTensorNormalizado = [
     [
-        (36-25)/(40-25), // idade normalizada
-        1,    // cor azul
-        0,    // cor vermelho
-        0,    // cor verde
-        0,    // localização São Paulo
-        0,    // localização Rio
-        0     // localização Curitiba
+        (36 - 25) / (40 - 25), // normalized age
+        1,    // blue color
+        0,    // red color
+        0,    // green color
+        0,    // São Paulo location
+        0,    // Rio location
+        0     // Curitiba location
     ]
 ]
 
