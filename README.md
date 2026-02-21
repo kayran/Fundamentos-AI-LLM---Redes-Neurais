@@ -1,16 +1,17 @@
-# Summary
-This project is a machine learning implementation using TensorFlow.js designed to classify users into specific categories (Premium, Medium, or Basic). By processing demographic and preference data—such as normalized age, color choices, and geographic locations—the application trains a neural network to identify patterns and provide probabilistic predictions for user tiering.
+# Project Documentation Assistant
 
-# Structure
-- `index.js`: The core script of the application. it contains the data preprocessing logic (normalization and one-hot encoding), the neural network architecture definition, the training loop, and the prediction functions.
+## Summary
+This project is an automated documentation tool designed to keep `README.md` files synchronized with the latest codebase changes. By analyzing git commit messages and diffs, it ensures that project documentation remains accurate and up-to-date with minimal manual intervention.
 
-# Technologies
-- **Node.js**: The runtime environment for the application.
-- **TensorFlow.js (@tensorflow/tfjs-node)**: The primary library used for building, compiling, and training the neural network.
-- **JavaScript (ES Modules)**: The programming language used for the project logic.
+## Structure
+- **.agent/**: Contains the internal configuration, logic, and prompt templates used by the AI assistant (restricted access).
+- **README.md**: The primary documentation file that provides a high-level overview and technical details of the project.
 
-# Extra Details
-- **Language Standardization**: The codebase, including comments and documentation within the logic, has been fully standardized to English to ensure better maintainability and global accessibility.
-- **Model Complexity**: The hidden layer of the neural network was recently increased to 200 neurons. This adjustment was made to allow the model to learn more complex patterns, which is particularly useful when working with smaller training datasets.
-- **Architecture**: The model uses a `dense` layer with `ReLU` activation for feature filtering and a final `dense` layer with `softmax` activation to output probabilities across the three target categories.
-- **Optimization**: The training process utilizes the `Adam` optimizer and `categoricalCrossentropy` loss function, which is ideal for multi-class classification tasks.
+## Technologies
+- **Markdown**: For structured and readable documentation.
+- **Git**: For version control and tracking changes via commits and diffs.
+- **AI Prompt Engineering**: Specialized instruction sets to govern how documentation is generated and updated.
+
+## Extra Details
+- **Recent Update**: The AI prompt logic has been refined to ensure that documentation updates are incremental and consistent. The system now prioritizes maintaining the existing structure and only applying changes directly related to the provided commit information, avoiding unnecessary full rewrites.
+- **Update Focus**: Current improvements focus on the precision of the documentation agent's responses and its adherence to specific formatting rules.
