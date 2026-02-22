@@ -1,7 +1,7 @@
 {
   "name": "modulo-2---redes-neurais",
   "version": "0.0.1",
-  "description": "Using Tensorflow JS and node to study neural networks[",
+  "description": "Using Tensorflow JS and node to study neural networks",
   "main": "index.js",
   "type": "module",
   "scripts": {
